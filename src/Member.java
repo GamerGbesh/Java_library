@@ -20,21 +20,22 @@ public class Member {
     }
 
     public void showBooks(){
+        System.out.println("These are the books borrowed by " + name);
+        System.out.println("-".repeat(50));
         for (Book book : books_possessed) System.out.println(book.getName());
+        System.out.println("-".repeat(50));
     }
 
     /**
      * This method allows a member to borrow a book
      * @param book This refers to the book the member wants to borrow
-     * @throws Exception Checks if the person has borrowed the max number of books
-     * @throws Exception Checks if the user has already borrowed the book
      */
-    public void addBorrowedBooks(Book book) throws Exception {
+    public void addBorrowedBooks(Book book){
         if (books_possessed.size() == 2){
-            throw new Exception(name + " has already borrowed the max number of books!");
+            System.out.println(name + " has already borrowed the max number of books!");
         }
         else if (books_possessed.contains(book)) {
-            throw new Exception(name + " has already borrowed this book!");
+            System.out.println(name + " has already borrowed this book!");
         }
         else books_possessed.add(book);
     }
@@ -42,18 +43,19 @@ public class Member {
     /**
      * This function is used to return a book that a member has borrowed
      * @param book This is the book the member is returning
-     * @throws IllegalArgumentException if the book has not been borrowed by that person
      */
-    public void removeBorrowedBooks(Book book){
+    public boolean removeBorrowedBooks(Book book){
         if (books_possessed.isEmpty()){
             System.out.println(name + " has not borrowed any books!");
-            return;
+            return false;
         }
         if (books_possessed.contains(book)){
             books_possessed.remove(book);
+            return true;
         }
         else{
-            throw new IllegalArgumentException(book.getName() + " has not been borrowed by " + name);
+            System.out.println(book.getName() + " has not been borrowed by " + name);
+            return false;
         }
     }
 
@@ -61,9 +63,13 @@ public class Member {
         return debt;
     }
 
+    /**
+     * Used to add debt to the member when the member delays returning borrowed books
+     * @param amount this is the amount of money to be added to the person's debt
+     */
     public void addDebt(float amount){
         if (amount < 0){
-            throw new IllegalArgumentException("The amount to be paid cannot be negative");
+            System.out.println("The amount to be paid cannot be negative");
         }
         else{
             this.debt += amount;
@@ -73,14 +79,13 @@ public class Member {
     /**
      * This function is used to pay the debt the person owes
      * @param amount the amount to be paid
-     * @throws IllegalArgumentException if the amount is negative or the amount is more than what is owed
      */
     public void payDebt(float amount){
         if (amount < 0){
-            throw new IllegalArgumentException("The amount to be paid cannot be negative");
+            System.out.println("The amount to be paid cannot be negative");
         }
         else if (amount > this.debt){
-            throw new IllegalArgumentException("The amount to be paid cannot be more than the debt owed!");
+            System.out.println("The amount to be paid cannot be more than the debt owed!");
         }
         else{
             this.debt -= amount;

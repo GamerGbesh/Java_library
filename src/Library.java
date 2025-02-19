@@ -43,16 +43,16 @@ public class Library {
         for (Map.Entry<Book, Integer> entry : books.entrySet()){
             System.out.println("Title: " + entry.getKey().getName() + " | Quantity: " + entry.getValue());
         }
+        System.out.println("-".repeat(50));
     }
 
     /**
      * This method adds new members to the library
      * @param member the person to be added to the library
-     * @throws IllegalArgumentException if the member is already in the library
      */
     public void addMembers(Member member){
         if (members.contains(member)){
-            throw new IllegalArgumentException(member.getName() + " is already a member of the library!");
+            System.out.println(member.getName() + " is already a member of the library!");
         }
         else members.add(member);
     }
@@ -61,9 +61,13 @@ public class Library {
      * Displays all members of the library
      */
     public void displayMembers(){
+        System.out.println("These are the members of library");
+        System.out.println("-".repeat(50));
         for (Member member : members){
             System.out.println(member.getName());
         }
+        System.out.println("-".repeat(50));
+
     }
 
     /**
@@ -71,9 +75,9 @@ public class Library {
      * @param member the member who wants borrow the book
      * @param book the book to be borrowed
      */
-    public void giveBook(Member member, Book book) throws Exception {
+    public void giveBook(Member member, Book book){
         if (!books.containsKey(book)){
-            throw new IllegalArgumentException("This book is not in the library!");
+            System.out.println("This book is not in the library!");
         }
         else {
             if (books.get(book) <= 0){
@@ -85,12 +89,15 @@ public class Library {
         }
     }
 
+    /**
+     * This method is to return the books borrowed by the members back to the library
+     * @param member this is the member that is to return the book
+     * @param book this is the book to be returned
+     */
     public void returnBook(Member member, Book book){
         if (!books.containsKey(book)){
-            throw new IllegalArgumentException("The library does not possess " + book.getName() + " therefore it cannot be accepted!");
+            System.out.println("The library does not possess " + book.getName() + " therefore it cannot be accepted!");
         }
-        member.removeBorrowedBooks(book);
-        addBooks(book);
-
+        if (member.removeBorrowedBooks(book)) addBooks(book);
     }
 }
