@@ -2,6 +2,9 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 
+/**
+ * This class is to simulate an actual library
+ */
 public class Library {
     private final Map<Book, Integer> books = new HashMap<>();
     private final ArrayList<Member> members = new ArrayList<Member>();
@@ -18,6 +21,10 @@ public class Library {
         this.name = name;
     }
 
+    /**
+     * This method is to add new books to the library
+     * @param book This is the book to be added to the library
+     */
     public void addBooks(Book book){
         if (books.containsKey(book)){
             books.put(book, books.get(book) + 1);
@@ -27,6 +34,9 @@ public class Library {
         }
     }
 
+    /**
+     * This function displays all the books currently owned by the library
+     */
     public void viewBooks(){
         System.out.println("All the books in the library");
         System.out.println("-".repeat(50));
@@ -35,21 +45,52 @@ public class Library {
         }
     }
 
+    /**
+     * This method adds new members to the library
+     * @param member the person to be added to the library
+     * @throws IllegalArgumentException if the member is already in the library
+     */
     public void addMembers(Member member){
-        this.members.add(member);
+        if (members.contains(member)){
+            throw new IllegalArgumentException(member.getName() + " is already a member of the library!");
+        }
+        else members.add(member);
     }
 
+    /**
+     * Displays all members of the library
+     */
     public void displayMembers(){
         for (Member member : members){
             System.out.println(member.getName());
         }
     }
 
-    public void giveBook(Member member, Book book){
-        /*
-        This function is supposed to check if a book exists in the dictionary, if the books exists check if the quantity is more than 0.
-        If the person doesn't already have the max number of books then you can add the new book to the person's borrowed books.
-         */
+    /**
+     * Checks if the book is in the library and then hands it to the person borrowing
+     * @param member the member who wants borrow the book
+     * @param book the book to be borrowed
+     */
+    public void giveBook(Member member, Book book) throws Exception {
+        if (!books.containsKey(book)){
+            throw new IllegalArgumentException("This book is not in the library!");
+        }
+        else {
+            if (books.get(book) <= 0){
+                System.out.println("All available copies of this book have already been borrowed!");
+                return;
+            }
+            member.addBorrowedBooks(book);
+            books.put(book, books.get(book) - 1);
+        }
     }
 
+    public void returnBook(Member member, Book book){
+        if (!books.containsKey(book)){
+            throw new IllegalArgumentException("The library does not possess " + book.getName() + " therefore it cannot be accepted!");
+        }
+        member.removeBorrowedBooks(book);
+        addBooks(book);
+
+    }
 }

@@ -1,3 +1,6 @@
+/**
+ * This class is used to create books to be kept in a library
+ */
 public class Book {
     private String name;
     private String ISBN;
