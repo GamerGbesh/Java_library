@@ -16,6 +16,8 @@ public class Member {
         this.age = age;
         this.contact = contact;
         this.email = email;
+        debt = 0;
+
 
     }
 

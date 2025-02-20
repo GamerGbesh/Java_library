@@ -7,7 +7,7 @@ import java.util.HashMap;
  */
 public class Library {
     private final Map<Book, Integer> books = new HashMap<>();
-    private final ArrayList<Member> members = new ArrayList<Member>();
+    public final ArrayList<Member> members = new ArrayList<Member>();
     private String name;
 
     public Library(String name){
@@ -60,13 +60,14 @@ public class Library {
     /**
      * Displays all members of the library
      */
-    public void displayMembers(){
+    public boolean displayMembers(){
         System.out.println("These are the members of library");
         System.out.println("-".repeat(50));
-        for (Member member : members){
-            System.out.println(member.getName());
+        for (int i = 0; i < members.size(); i++){
+            System.out.println((i + 1) + " " + members.get(i).getName());
         }
         System.out.println("-".repeat(50));
+        return !members.isEmpty();
 
     }
 
