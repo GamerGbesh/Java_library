@@ -21,25 +21,29 @@ public class Member {
 
     }
 
-    public void showBooks(){
+    public ArrayList<Book> showBooks(){
         System.out.println("These are the books borrowed by " + name);
         System.out.println("-".repeat(50));
-        for (Book book : books_possessed) System.out.println(book.getName());
+        for (int i =0; i < books_possessed.size(); i++) System.out.println((i+1) + ". " +books_possessed.get(i).getName());
         System.out.println("-".repeat(50));
+        return books_possessed;
     }
 
     /**
      * This method allows a member to borrow a book
      * @param book This refers to the book the member wants to borrow
      */
-    public void addBorrowedBooks(Book book){
+    public boolean addBorrowedBooks(Book book){
         if (books_possessed.size() == 2){
             System.out.println(name + " has already borrowed the max number of books!");
+            return false;
         }
         else if (books_possessed.contains(book)) {
             System.out.println(name + " has already borrowed this book!");
+            return false;
         }
         else books_possessed.add(book);
+        return true;
     }
 
     /**

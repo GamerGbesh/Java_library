@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -11,6 +12,8 @@ public class Main {
             System.out.println("2. Add a new member to the library");
             System.out.println("3. Show all the books the library possesses");
             System.out.println("4. Show the members of the library");
+            System.out.println("5. Borrow book");
+            System.out.println("6. Return book");
             
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -25,9 +28,9 @@ public class Main {
                 String author = scanner.nextLine();
                 System.out.print("Enter the genre of the book: ");
                 String genre = scanner.nextLine();
-
-                Book book = new Book(name, ISBN, author, genre);
-                library.addBooks(book);
+                System.out.println("How many copies of the book are you adding: ");
+                int count = scanner.nextInt(); scanner.nextLine();
+                library.addBooks(name, ISBN, author, genre, count);
             }
             else if (choice == 2) {
                 System.out.print("Enter the name of the member: ");
@@ -47,18 +50,54 @@ public class Main {
             else if (choice == 4){
                 if (library.displayMembers()){
                     System.out.println("Do you want to get show a members borrowed books?");
-                    System.out.println("If yes, write the person's index else write no");
+                    System.out.println("If yes, write the person's index else write 0");
                     int another = scanner.nextInt(); scanner.nextLine();
                     if (another != 0){
                         Member member = library.members.get(another-1);
                         member.showBooks();
                     }
                 }
+                else System.out.println("There are no members in the library!");
+            } else if (choice == 5) {
+                if (library.displayMembers()){
+                    System.out.println("Write the index of the member who is going to borrow the book.");
+                    int another = scanner.nextInt(); scanner.nextLine();
+                    if (another != 0){
+                        Member member = library.members.get(another-1);
+                        ArrayList<Book> books = library.viewBooks();
+                        int selection = scanner.nextInt(); scanner.nextLine();
+                        Book book = books.get(selection-1);
+                        library.giveBook(member, book);
+                    }
+                    else {
+                        System.out.println("There is no member with that index in the library");
+                    }
+                }
+                else System.out.println("There are no members in the library!");
 
+            } else if (choice == 6) {
+                if (library.displayMembers()) {
+                    System.out.println("Write the index of the member who is going to return the book.");
+                    int another = scanner.nextInt();
+                    scanner.nextLine();
+                    if (another != 0) {
+                        Member member = library.members.get(another - 1);
+                        ArrayList<Book> books = member.showBooks();
+                        if (!books.isEmpty()) {
+                            int selection = scanner.nextInt();
+                            scanner.nextLine();
+                            Book book = books.get(selection - 1);
+                            library.returnBook(member, book);
+                        }
+                        else{
+                            System.out.println(member.getName() + " hasn't borrowed any book!");
+                        }
+                    } else {
+                        System.out.println("There is no member with that index in the library");
+                    }
+                }
             }
-
         }
-
         scanner.close();
     }
 }
