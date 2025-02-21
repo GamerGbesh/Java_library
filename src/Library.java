@@ -28,6 +28,7 @@ public class Library {
      * @param author This is the author of the book
      * @param genre This is the genre of the book
      * @param ISBN This is the ISBN of the book
+     * @param count This is the number of books that would be added to the library
      */
     public void addBooks(String name, String ISBN, String author, String genre, int count){
         Book book = (checkBook(name, ISBN, author, genre));
@@ -40,6 +41,14 @@ public class Library {
         }
     }
 
+    /**
+     * This method checks if the book exists within the library
+     * @param name The name of the book to check
+     * @param ISBN The ISBN of the book
+     * @param author The author of the book
+     * @param genre The genre of the book
+     * @return Book if found else null
+     */
     public Book checkBook(String name, String ISBN, String author, String genre) {
         for (Map.Entry<Book, Integer> entry : books.entrySet()) {
             if (Objects.equals(entry.getKey().getName(), name) && Objects.equals(entry.getKey().getAuthor(), author) && Objects.equals(entry.getKey().getISBN(), ISBN)) {
