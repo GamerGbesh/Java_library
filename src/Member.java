@@ -11,16 +11,25 @@ public class Member {
     private float debt;
     private final ArrayList<Book> books_possessed = new ArrayList<>();
 
+    /**
+     * The constructor for the member class
+     * @param name the name of the member
+     * @param age the age of the member
+     * @param contact the contact of the member
+     * @param email the email of the member
+     */
     public Member(String name, int age, String contact, String email) {
         this.name = name;
         this.age = age;
         this.contact = contact;
         this.email = email;
         debt = 0;
-
-
     }
 
+    /**
+     * This shows the books borrowed by the member
+     * @return ArrayList of books that the member borrowed
+     */
     public ArrayList<Book> showBooks(){
         System.out.println("These are the books borrowed by " + name);
         System.out.println("-".repeat(50));
